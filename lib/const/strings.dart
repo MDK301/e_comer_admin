@@ -40,5 +40,7 @@ const nameHint = "eg. Vendor Name",
     mobile = "Shop Mobile",
     website = "Shop Website",
     confirmPassword = "Confirm Password",
+    newPassword = "New Password",
+
     shopName = "Shop Name",
     address = "Shop Address";

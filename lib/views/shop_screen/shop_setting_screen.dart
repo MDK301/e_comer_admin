@@ -1,5 +1,7 @@
 import 'package:e_comer_admin/const/const.dart';
+import 'package:e_comer_admin/controller/profile_controller.dart';
 import 'package:e_comer_admin/views/widget/custom_textfield.dart';
+import 'package:e_comer_admin/views/widget/loading_indicator.dart';
 import 'package:e_comer_admin/views/widget/text_style.dart';
 
 class ShopSettings extends StatelessWidget {
@@ -7,45 +9,63 @@ class ShopSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: purpleColor,
-        appBar: AppBar(
-          title: boldText(text: shopSettings, size: 16.0),
-          actions: [
-            TextButton(onPressed: () {}, child: normalText(text: save))
-          ], // AppBar
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              customTextField(
-                label: shopName,
-                hint: nameHint,
-              ),
-              10.heightBox,
-              customTextField(
-                label: address,
-                hint: shopAddressHint,
+    var controller = Get.find<ProfileController>();
+    return Obx(
+      () => Scaffold(
+          backgroundColor: purpleColor,
+          appBar: AppBar(
+            title: boldText(text: shopSettings, size: 16.0),
+            actions: [
+              controller.isLoading.value
+                  ? loadingIndicator(circleColor: white)
+                  : TextButton(
+                      onPressed: () async{
+                        controller.isLoading(true);
+                        await controller.updateShop(
+                          shopaddress: controller.shopaddressController.text,
+                          shopname: controller.shopnameController.text,
+                          shopmobile: controller.shopmobileController.text,
+                          shopwebsite: controller.shopwebsiteController.text,
+                          shopdesc: controller.descriptionController.text,
+                        );
+                        VxToast.show(context, msg: "Shop update");
 
-              ),
-              10.heightBox,
-              customTextField(
-                label: mobile,
-                hint: shopMobileHint,
-
-              ),
-              10.heightBox,
-              customTextField(
-                label: website,
-                hint: shopWebsiteHint,
-
-              ),
-              10.heightBox,
-              customTextField(
-                  isDesc: true, label: description, hint: shopDescHint),
-            ], // Column
-          ), // Padding),
-        ));
+                      },
+                      child: normalText(text: save)),
+            ],
+          ),
+          body: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                customTextField(
+                    label: shopName,
+                    hint: nameHint,
+                    controller: controller.shopnameController),
+                10.heightBox,
+                customTextField(
+                    label: address,
+                    hint: shopAddressHint,
+                    controller: controller.shopaddressController),
+                10.heightBox,
+                customTextField(
+                    label: mobile,
+                    hint: shopMobileHint,
+                    controller: controller.shopmobileController),
+                10.heightBox,
+                customTextField(
+                    label: website,
+                    hint: shopWebsiteHint,
+                    controller: controller.shopwebsiteController),
+                10.heightBox,
+                customTextField(
+                    isDesc: true,
+                    label: description,
+                    hint: shopDescHint,
+                    controller: controller.descriptionController),
+              ], // Column
+            ), // Padding),
+          )),
+    );
   }
 }

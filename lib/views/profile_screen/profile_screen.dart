@@ -26,7 +26,9 @@ class ProfileScreen extends StatelessWidget {
           actions: [
             IconButton(
                 onPressed: () {
-                  Get.to(() => EditProfileScreen());
+                  Get.to(() => EditProfileScreen(
+                        username: controller.snapshotData['vendor_name'],
+                      ));
                 },
                 icon: const Icon(Icons.edit)),
             TextButton(
@@ -44,18 +46,29 @@ class ProfileScreen extends StatelessWidget {
             if (!snapshot.hasData) {
               return loadingIndicator(circleColor: white);
             } else {
-              controller.snapshotData= snapshot.data!.docs[0];
+              controller.snapshotData = snapshot.data!.docs[0];
+              print(controller.snapshotData['imageUrl']);
 
               return Column(
+
                 children: [
                   ListTile(
-                    leading: Image.asset(imgProduct)
-                        .box
-                        .roundedFull
-                        .clip(Clip.antiAlias)
-                        .make(),
-                    title: boldText(text: "${controller.snapshotData['vendor_name']}"),
-                    subtitle: normalText(text: "${controller.snapshotData['email']}"),
+                    leading: controller.snapshotData['imageUrl'] == ''
+                        ? Image.asset(imgProduct, width: 100, fit: BoxFit.cover)
+                            .box
+                            .roundedFull
+                            .clip(Clip.antiAlias)
+                            .make()
+                        : Image.network(controller.snapshotData['imageUrl'],
+                                width: 100)
+                            .box
+                            .roundedFull
+                            .clip(Clip.antiAlias)
+                            .make(),
+                    title: boldText(
+                        text: "${controller.snapshotData['vendor_name']}"),
+                    subtitle:
+                        normalText(text: "${controller.snapshotData['email']}"),
                   ), // ListTile
                   const Divider(),
                   10.heightBox,
@@ -64,7 +77,7 @@ class ProfileScreen extends StatelessWidget {
                     child: Column(
                       children: List.generate(
                         profileButtonsIcons.length,
-                            (index) => ListTile(
+                        (index) => ListTile(
                           onTap: () {
                             switch (index) {
                               case 0:
@@ -76,7 +89,8 @@ class ProfileScreen extends StatelessWidget {
                               default:
                             }
                           },
-                          leading: Icon(profileButtonsIcons[index], color: white),
+                          leading:
+                              Icon(profileButtonsIcons[index], color: white),
                           title: normalText(text: profileButtonsTitles[index]),
                         ),
                       ),
@@ -84,7 +98,6 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ],
               );
-
             }
           },
           // FutureBuilder
