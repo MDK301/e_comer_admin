@@ -15,7 +15,7 @@ class ProductsScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: purpleColor,
         onPressed: () {
-          Get.to(()=>const AddProduct());
+          Get.to(() => const AddProduct());
         },
         child: Icon(
           Icons.add,
@@ -33,7 +33,7 @@ class ProductsScreen extends StatelessWidget {
               (index) => Card(
                 child: ListTile(
                     onTap: () {
-                      Get.to(()=>const ProductDetails());
+                      Get.to(() => ProductDetails());
                     },
                     leading: Image.asset(
                       imgProduct,
@@ -45,9 +45,13 @@ class ProductsScreen extends StatelessWidget {
                       text: "Product title",
                       color: fontGrey,
                     ),
-                    subtitle: normalText(
-                      text: "\$40.0",
-                      color: darkGrey,
+                    subtitle:Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        normalText(text: "\$40.0", color: darkGrey),
+                        10.widthBox,
+                        boldText(text: "Featured", color: green),
+                      ],
                     ),
                     trailing: VxPopupMenu(
                       arrowSize: 0.0,
@@ -61,7 +65,8 @@ class ProductsScreen extends StatelessWidget {
                                 Icon(popupMenuIcons[index]),
                                 15.widthBox,
                                 normalText(
-                                    text: popupMenuTitles[index], color: darkGrey)
+                                    text: popupMenuTitles[index],
+                                    color: darkGrey)
                               ],
                             ).onTap(() {}),
                           ),

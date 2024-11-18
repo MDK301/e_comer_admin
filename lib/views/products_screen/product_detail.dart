@@ -41,7 +41,15 @@ class ProductDetails extends StatelessWidget {
                 children: [
                   boldText(text: "Product title", color: fontGrey, size: 16.0),
                   10.heightBox,
-                  // rating
+                  Row(
+                    children: [
+                      boldText(text: "Category", color: fontGrey, size: 16.0),
+                      10.widthBox,
+                      normalText(text: "Subcategory", color: fontGrey, size: 16.0),
+                    ], // Row
+                  ),
+                  10.heightBox,
+                  // RATING
                   VxRating(
                     isSelectable: false,
                     // value: double.parse(data['p_rating']),
