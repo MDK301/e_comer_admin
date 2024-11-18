@@ -1,5 +1,7 @@
 import 'package:e_comer_admin/const/const.dart';
+import 'package:e_comer_admin/const/firebase_consts.dart';
 import 'package:e_comer_admin/views/auth_screen/login_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 
@@ -9,10 +11,32 @@ void main() async{
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  void initState() {
+    super.initState();
+    checkUser();
+  }
+
+  var isLoggedin = false;
+
+  checkUser() async {
+    auth.authStateChanges().listen((User? user) {
+      if (user == null && mounted) {
+        isLoggedin = false;
+      } else {
+        isLoggedin = true;
+      }
+      setState(() {});
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
