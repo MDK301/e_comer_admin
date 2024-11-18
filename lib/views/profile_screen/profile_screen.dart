@@ -1,5 +1,7 @@
 import 'package:e_comer_admin/const/const.dart';
+import 'package:e_comer_admin/views/messenger_screen/messenger_screen.dart';
 import 'package:e_comer_admin/views/profile_screen/edit_profile_screen.dart';
+import 'package:e_comer_admin/views/shop_screen/shop_setting_screen.dart';
 import 'package:e_comer_admin/views/widget/appbar_widget.dart';
 import 'package:e_comer_admin/views/widget/text_style.dart';
 
@@ -14,10 +16,11 @@ class ProfileScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         title: boldText(text: settings, size: 16.0),
         actions: [
-          IconButton(onPressed: () {
-            Get.to(()=> EditProfileScreen());
-
-          }, icon: const Icon(Icons.edit)),
+          IconButton(
+              onPressed: () {
+                Get.to(() => EditProfileScreen());
+              },
+              icon: const Icon(Icons.edit)),
           TextButton(onPressed: () {}, child: normalText(text: logout)),
         ],
       ),
@@ -40,6 +43,17 @@ class ProfileScreen extends StatelessWidget {
               children: List.generate(
                 profileButtonsIcons.length,
                 (index) => ListTile(
+                  onTap: () {
+                    switch (index) {
+                      case 0:
+                        Get.to(() => ShopSettings());
+                        break;
+                      case 1:
+                        Get.to(() => MessagesScreen());
+                        break;
+                      default:
+                    }
+                  },
                   leading: Icon(profileButtonsIcons[index], color: white),
                   title: normalText(text: profileButtonsTitles[index]),
                 ),

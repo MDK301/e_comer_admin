@@ -1,4 +1,5 @@
 import 'package:e_comer_admin/const/const.dart';
+import 'package:e_comer_admin/views/orders_screen/order_detail.dart';
 import 'package:e_comer_admin/views/widget/appbar_widget.dart';
 import 'package:e_comer_admin/views/widget/text_style.dart';
 import 'package:intl/intl.dart' as intl;
@@ -18,7 +19,9 @@ class OrdersScreen extends StatelessWidget {
             children: List.generate(
               20,
               (index) => ListTile(
-                onTap: () {},
+                onTap: () {
+                  Get.to(()=>const OrderDetails());
+                },
                 tileColor: lightGrey,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(1)

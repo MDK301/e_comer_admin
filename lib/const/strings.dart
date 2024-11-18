@@ -27,6 +27,7 @@ const appname = "eMart Seller App",
     editProfile = "Edit Profile",
     popular = "Popular Products",
     settings = "Settings",
+    chat = "Chats",
     name = "User",
     credit = "NguoiDepTraiNhatTheGian";
 // shop settings strings
