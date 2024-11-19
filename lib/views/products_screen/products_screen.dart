@@ -16,12 +16,12 @@ class ProductsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var controller=Get.put(ProductController());
+    var controller = Get.put(ProductController());
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: purpleColor,
-        onPressed: ()async {
+        onPressed: () async {
           await controller.getCategories();
           controller.populateCategoryList();
           Get.to(() => const AddProduct());
@@ -51,7 +51,9 @@ class ProductsScreen extends StatelessWidget {
                       (index) => Card(
                         child: ListTile(
                             onTap: () {
-                              Get.to(() => ProductDetails(data: data[index],));
+                              Get.to(() => ProductDetails(
+                                    data: data[index],
+                                  ));
                             },
                             leading: Image.network(
                               data[index]['p_imgs'][0],
@@ -71,7 +73,9 @@ class ProductsScreen extends StatelessWidget {
                                     color: darkGrey),
                                 10.widthBox,
                                 boldText(
-                                  text: data[index]['is_featured'] == true ? "Featured" : '',
+                                  text: data[index]['is_featured'] == true
+                                      ? "Featured"
+                                      : '',
                                   color: green,
                                 )
                               ],
@@ -81,14 +85,25 @@ class ProductsScreen extends StatelessWidget {
                               menuBuilder: () => Column(
                                 children: List.generate(
                                   popupMenuTitles.length,
-                                  (index) => Padding(
+                                  (i) => Padding(
                                     padding: const EdgeInsets.all(12.0),
                                     child: Row(
                                       children: [
-                                        Icon(popupMenuIcons[index]),
+                                        Icon(
+                                          popupMenuIcons[i],
+                                          color: data[index]['featured_id'] ==
+                                                      currentUser!.uid &&
+                                                  i == 0
+                                              ? green
+                                              : darkGrey,
+                                        ),
                                         15.widthBox,
                                         normalText(
-                                            text: popupMenuTitles[index],
+                                            text: data[index]['featured_id'] ==
+                                                        currentUser!.uid &&
+                                                    i == 0
+                                                ? 'Remove feature'
+                                                : popupMenuTitles[i],
                                             color: darkGrey)
                                       ],
                                     ).onTap(() {}),
